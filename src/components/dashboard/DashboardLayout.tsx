@@ -10,10 +10,13 @@ import {
   MapPin,
   Gift,
   Menu,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const navigation = [
   { name: 'Dashboard', href: '#dashboard', icon: ChefHat, current: true },
@@ -36,6 +39,17 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children, activeSection, onSectionChange }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out",
+    });
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -120,6 +134,16 @@ export function DashboardLayout({ children, activeSection, onSectionChange }: Da
               <h2 className="text-lg font-semibold text-foreground capitalize">
                 {activeSection.replace('-', ' ')} Management
               </h2>
+            </div>
+            <div className="flex items-center gap-4 ml-auto">
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+                className="flex items-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </Button>
             </div>
           </div>
         </div>
