@@ -1,13 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { Dashboard } from '@/components/dashboard/Dashboard';
+import { AuthManagement } from '@/components/dashboard/sections/AuthManagement';
 
 const Index = () => {
+  const [activeSection, setActiveSection] = useState('dashboard');
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'auth':
+        return <AuthManagement />;
+      case 'categories':
+        return <div className="text-center py-8 text-muted-foreground">Categories management coming soon...</div>;
+      case 'food-items':
+        return <div className="text-center py-8 text-muted-foreground">Food items management coming soon...</div>;
+      case 'orders':
+        return <div className="text-center py-8 text-muted-foreground">Orders management coming soon...</div>;
+      case 'offers':
+        return <div className="text-center py-8 text-muted-foreground">Offers management coming soon...</div>;
+      case 'favorites':
+        return <div className="text-center py-8 text-muted-foreground">Favorites management coming soon...</div>;
+      case 'cart':
+        return <div className="text-center py-8 text-muted-foreground">Cart management coming soon...</div>;
+      case 'options':
+        return <div className="text-center py-8 text-muted-foreground">Options management coming soon...</div>;
+      case 'branches':
+        return <div className="text-center py-8 text-muted-foreground">Branches management coming soon...</div>;
+      default:
+        return <Dashboard />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <DashboardLayout activeSection={activeSection} onSectionChange={setActiveSection}>
+      {renderSection()}
+    </DashboardLayout>
   );
 };
 
